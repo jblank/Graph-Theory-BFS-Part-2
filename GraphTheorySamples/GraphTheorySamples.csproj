@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="CityNode.cs" />
     <Compile Include="GraphSample.cs" />
+    <Compile Include="NodeStatus.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Route.cs" />

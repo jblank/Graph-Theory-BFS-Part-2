@@ -5,15 +5,11 @@ namespace GraphTheorySamples
 {
     public static class BFSGraphSample
     {
-        private static int Unvisited = 0;
-        private static int Visited = 1;
-        private static int Completed = 2;
-
         public static int GetHopsFromSourceToDestination(int startingCityId, int endingCityId, List<Route> routes, List<CityNode> cities)
         {
             // Initialize Graph
             var graph = InitializeNetworkGraph(cities.Count, routes);
-            var nodeState = new int[cities.Count + 1];
+            var nodeState = new NodeStatus[cities.Count + 1];
             var nodeDistance = new int[cities.Count + 1];
 
             // Breadth-first search (BFS) find the hops to each city
@@ -26,14 +22,14 @@ namespace GraphTheorySamples
                 var node = queue.Dequeue();
                 for (int i = 1; i <= cities.Count; i++)
                 {
-                    if (graph[node, i] == 1 && nodeState[i] == Unvisited)
+                    if (graph[node, i] == 1 && nodeState[i] == NodeStatus.Unvisited)
                     {
                         queue.Enqueue(i);
-                        nodeState[i] = Visited;
+                        nodeState[i] = NodeStatus.Visited;
                         nodeDistance[i] = nodeDistance[node] + 1;
                     }
                 }
-                nodeState[node] = Completed;
+                nodeState[node] = NodeStatus.Completed;
             } while (queue.Any());
 
             return nodeDistance[endingCityId];
