@@ -1,11 +1,54 @@
-﻿using System;
+﻿using FluentAssertions;
+using GraphTheorySamples;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
-namespace GraphTheorySamples
+namespace GraphTheorySamplesTests
 {
-    class Program
+    [TestClass]
+    public class GraphSampleTests
     {
-        static void Main(string[] args)
+        [TestMethod]
+        public void when_initializing_graph_with_zero_cities()
+        {
+            var target = BFSGraphSample.InitializeNetworkGraph(0, new List<Route>());
+
+            target.Should().NotBeNull();
+        }
+
+        [TestMethod]
+        public void when_initializing_graph_with_one_city_and_no_routes()
+        {
+            var target = BFSGraphSample.InitializeNetworkGraph(1, new List<Route>());
+
+            target.Should().NotBeNull();
+        }
+
+        [TestMethod]
+        public void when_initializing_graph_with_multiple_cities_and_no_routes()
+        {
+            var routeList = new List<Route> {};
+            var target = BFSGraphSample.InitializeNetworkGraph(3, routeList);
+
+            target.Should().NotBeNull();
+            target.Length.Should().Be(16); // Expecting a 4x4 array
+        }
+
+        [TestMethod]
+        public void when_initializing_graph_with_multiple_cities_and_routes()
+        {
+            var routeList = new List<Route> { new Route(1, 2), new Route(2, 3) };
+            var target = BFSGraphSample.InitializeNetworkGraph(3, routeList);
+
+            target.Should().NotBeNull();
+            target.Length.Should().Be(16);
+            target[1, 2].Should().Be(1);
+            target[1, 3].Should().Be(0);
+            target[2, 3].Should().Be(1);
+        }
+
+        [TestMethod]
+        public void when_running_sample_bfs_graph()
         {
             var cities = new List<CityNode>
             {
@@ -47,8 +90,7 @@ namespace GraphTheorySamples
 
             var hops = BFSGraphSample.GetHopsFromSourceToDestination(1, 11, routeMap, cities);
 
-            Console.WriteLine($"Minimum number of flights between cities: {hops} flights");
-            Console.ReadLine();
+            hops.Should().Be(3);
         }
     }
 }
