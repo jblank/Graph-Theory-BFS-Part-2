@@ -26,28 +26,31 @@ namespace GraphTheorySamples
 
             var routeMap = new List<Route>
             {
-                new Route(1, 2),
-                new Route(2, 3),
-                new Route(3, 4),
-                new Route(2, 5),
-                new Route(2, 6),
-                new Route(3, 6),
-                new Route(3, 7),
-                new Route(4, 7),
-                new Route(4, 8),
-                new Route(4, 9),
-                new Route(8, 9),
-                new Route(4, 10),
-                new Route(9, 10),
-                new Route(9, 11),
-                new Route(1, 12),
-                new Route(9, 12),
-                new Route(12, 13)
+                new Route(1, 2, 208.02),
+                new Route(2, 3, 886.34),
+                new Route(3, 4, 542.16),
+                new Route(2, 5, 552.6),
+                new Route(2, 6, 1011.7),
+                new Route(3, 6, 961.87),
+                new Route(3, 7, 664.86),
+                new Route(4, 7, 379.98),
+                new Route(4, 8, 594.33),
+                new Route(4, 9, 1385.07),
+                new Route(8, 9, 968.49),
+                new Route(4, 10, 1983.08),
+                new Route(9, 10, 1032.05),
+                new Route(9, 11, 1092.3),
+                new Route(1, 12, 2761.62),
+                new Route(9, 12, 1425.95),
+                new Route(12, 13, 376.37)
             };
 
-            var hops = BFSGraphSample.GetHopsFromSourceToDestination(1, 11, routeMap, cities, true);
+            Console.WriteLine("Breadth-First Search, specific graph type, 0 = undirected, 1 = directed");
+            var useDirectedGraph = Console.ReadLine().Equals("1");
 
-            Console.WriteLine($"Minimum number of flights between cities: {hops} flights");
+            var hops = BFSGraphSample.GetHopsFromSourceToDestination(1, 11, routeMap, cities, useDirectedGraph);
+
+            Console.WriteLine($"Minimum number of flights between cities: {hops.Item1} flights ({hops.Item2} km)");
             Console.ReadLine();
         }
     }
