@@ -17,10 +17,10 @@ namespace GraphTheorySamples
         /// <param name="routes">List of routes to populate in graph</param>
         /// <param name="cities">List of cities to use for graph</param>
         /// <returns></returns>
-        public static int GetHopsFromSourceToDestination(int startingCityId, int endingCityId, List<Route> routes, List<CityNode> cities)
+        public static int GetHopsFromSourceToDestination(int startingCityId, int endingCityId, List<Route> routes, List<CityNode> cities, bool isDirectedGraph)
         {
             // Initialize Graph
-            var graph = InitializeNetworkGraph(cities.Count, routes);
+            var graph = InitializeNetworkGraph(cities.Count, routes, isDirectedGraph);
             var nodeState = new NodeStatus[cities.Count + 1];
             var nodeDistance = new int[cities.Count + 1];
 
@@ -53,13 +53,14 @@ namespace GraphTheorySamples
         /// <param name="cityCount">Count of cities in graph</param>
         /// <param name="routes">List of routes to populate in graph</param>
         /// <returns></returns>
-        public static int[,] InitializeNetworkGraph(int cityCount, List<Route> routes)
+        public static int[,] InitializeNetworkGraph(int cityCount, List<Route> routes, bool isDirectedGraph)
         {
             var networkGraph = new int[cityCount + 1, cityCount + 1];
             foreach (var route in routes)
             {
                 networkGraph[route.StartingCityId, route.EndingCityId] = 1;
-                networkGraph[route.EndingCityId, route.StartingCityId] = 1;
+                if (!isDirectedGraph)
+                    networkGraph[route.EndingCityId, route.StartingCityId] = 1;
             }
             return networkGraph;
         }

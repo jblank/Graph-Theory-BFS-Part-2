@@ -45,7 +45,7 @@ namespace GraphTheorySamples
                 new Route(12, 13)
             };
 
-            var hops = BFSGraphSample.GetHopsFromSourceToDestination(1, 11, routeMap, cities);
+            var hops = BFSGraphSample.GetHopsFromSourceToDestination(1, 11, routeMap, cities, true);
 
             Console.WriteLine($"Minimum number of flights between cities: {hops} flights");
             Console.ReadLine();
